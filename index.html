@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>awra-web</title>
+    <style>
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        overflow: hidden;
+        background: #131211;
+      }
+
+      .background {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        background: #131211;
+        pointer-events: none;
+      }
+
+      .base,
+      .color-field,
+      .orb,
+      .vignette,
+      .noise {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .base {
+        inset: -30%;
+        z-index: 0;
+        background:
+          radial-gradient(ellipse at 82% 7%, rgba(239, 239, 237, 0.96) 0%, rgba(220, 245, 164, 0.48) 11%, rgba(149, 198, 191, 0.18) 24%, transparent 44%),
+          radial-gradient(ellipse at 96% 56%, rgba(149, 198, 191, 0.90) 0%, rgba(149, 198, 191, 0.34) 22%, transparent 48%),
+          radial-gradient(ellipse at 18% 78%, rgba(18, 55, 68, 0.96) 0%, rgba(18, 55, 68, 0.68) 34%, transparent 62%),
+          linear-gradient(120deg, #131211 0%, #121716 30%, #123744 62%, #95c6bf 100%);
+        will-change: transform;
+        animation: baseFloat 10s ease-in-out infinite alternate;
+      }
+
+      .color-field {
+        inset: -34%;
+        z-index: 1;
+        background:
+          radial-gradient(circle at 80% 10%, rgba(239, 239, 237, 0.82) 0%, transparent 18%),
+          radial-gradient(circle at 76% 22%, rgba(220, 245, 164, 0.38) 0%, transparent 22%),
+          radial-gradient(circle at 88% 62%, rgba(149, 198, 191, 0.62) 0%, transparent 32%),
+          radial-gradient(circle at 18% 84%, rgba(18, 55, 68, 0.78) 0%, transparent 34%);
+        filter: blur(42px) saturate(110%);
+        will-change: transform, opacity;
+        animation: fieldWave 4.2s ease-in-out infinite alternate;
+      }
+
+      .orb {
+        z-index: 2;
+        border-radius: 9999px;
+        filter: blur(78px);
+        mix-blend-mode: screen;
+        will-change: transform, opacity;
+      }
+
+      .orb-white {
+        width: 58rem;
+        height: 44rem;
+        top: -20rem;
+        right: -20rem;
+        background: rgba(239, 239, 237, 0.84);
+        opacity: 0.66;
+        animation: whiteMove 4.6s ease-in-out infinite alternate;
+      }
+
+      .orb-lime {
+        width: 38rem;
+        height: 32rem;
+        top: -7rem;
+        right: -10rem;
+        background: rgba(220, 245, 164, 0.44);
+        opacity: 0.76;
+        animation: limeMove 3.8s ease-in-out infinite alternate;
+      }
+
+      .orb-mint {
+        width: 62rem;
+        height: 68rem;
+        top: 2rem;
+        right: -28rem;
+        background: rgba(149, 198, 191, 0.76);
+        opacity: 0.74;
+        animation: mintMove 5.2s ease-in-out infinite alternate;
+      }
+
+      .orb-blue {
+        width: 56rem;
+        height: 52rem;
+        left: -24rem;
+        bottom: -20rem;
+        background: rgba(18, 55, 68, 0.98);
+        opacity: 0.80;
+        animation: blueMove 5.8s ease-in-out infinite alternate;
+      }
+
+      .vignette {
+        inset: 0;
+        z-index: 3;
+        background:
+          linear-gradient(120deg, rgba(19, 18, 17, 0.98) 0%, rgba(19, 18, 17, 0.78) 34%, rgba(19, 18, 17, 0.16) 62%, transparent 82%),
+          linear-gradient(0deg, rgba(19, 18, 17, 0.34) 0%, transparent 34%, transparent 70%, rgba(19, 18, 17, 0.20) 100%);
+      }
+
+      .noise {
+        inset: -12%;
+        z-index: 4;
+        opacity: 0.36;
+        mix-blend-mode: soft-light;
+        background-image:
+          url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.18' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.02) 0px,
+            rgba(255,255,255,0.02) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+        background-size: 160px 160px, 100% 2px;
+        animation: grain 0.20s steps(4) infinite;
+      }
+
+      @keyframes baseFloat {
+        from {
+          transform: translate3d(-3%, -2%, 0) scale(1.04);
+        }
+        to {
+          transform: translate3d(3%, 3%, 0) scale(1.16);
+        }
+      }
+
+      @keyframes fieldWave {
+        from {
+          transform: translate3d(-10%, -6%, 0) scale(1.02) rotate(-4deg);
+          opacity: 0.70;
+        }
+        to {
+          transform: translate3d(12%, 8%, 0) scale(1.24) rotate(4deg);
+          opacity: 1;
+        }
+      }
+
+      @keyframes whiteMove {
+        from {
+          transform: translate3d(0, 0, 0) scale(1);
+          opacity: 0.58;
+        }
+        to {
+          transform: translate3d(-20vw, 14vh, 0) scale(1.24);
+          opacity: 0.84;
+        }
+      }
+
+      @keyframes limeMove {
+        from {
+          transform: translate3d(0, 0, 0) scale(1);
+          opacity: 0.34;
+        }
+        to {
+          transform: translate3d(-24vw, 22vh, 0) scale(1.40);
+          opacity: 0.72;
+        }
+      }
+
+      @keyframes mintMove {
+        from {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        to {
+          transform: translate3d(-26vw, -8vh, 0) scale(1.20);
+        }
+      }
+
+      @keyframes blueMove {
+        from {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        to {
+          transform: translate3d(20vw, -18vh, 0) scale(1.22);
+        }
+      }
+
+      @keyframes grain {
+        0% { transform: translate(0, 0); }
+        20% { transform: translate(-1%, 1%); }
+        40% { transform: translate(1%, -1%); }
+        60% { transform: translate(-1%, -1%); }
+        80% { transform: translate(1%, 1%); }
+        100% { transform: translate(0, 0); }
+      }
+
+      @media (max-width: 640px) {
+        .base {
+          inset: -40%;
+        }
+
+        .color-field {
+          inset: -46%;
+          filter: blur(34px) saturate(110%);
+        }
+
+        .orb {
+          filter: blur(56px);
+        }
+
+        .orb-white {
+          width: 34rem;
+          height: 28rem;
+          top: -11rem;
+          right: -14rem;
+        }
+
+        .orb-lime {
+          width: 26rem;
+          height: 22rem;
+          top: -5rem;
+          right: -11rem;
+        }
+
+        .orb-mint {
+          width: 38rem;
+          height: 44rem;
+          top: 4rem;
+          right: -20rem;
+        }
+
+        .orb-blue {
+          width: 36rem;
+          height: 34rem;
+          left: -16rem;
+          bottom: -12rem;
+        }
+
+        @keyframes whiteMove {
+          from {
+            transform: translate3d(0, 0, 0) scale(1);
+            opacity: 0.58;
+          }
+          to {
+            transform: translate3d(-16vw, 10vh, 0) scale(1.18);
+            opacity: 0.82;
+          }
+        }
+
+        @keyframes limeMove {
+          from {
+            transform: translate3d(0, 0, 0) scale(1);
+            opacity: 0.34;
+          }
+          to {
+            transform: translate3d(-18vw, 16vh, 0) scale(1.30);
+            opacity: 0.68;
+          }
+        }
+
+        @keyframes mintMove {
+          from {
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+          to {
+            transform: translate3d(-18vw, -6vh, 0) scale(1.16);
+          }
+        }
+
+        @keyframes blueMove {
+          from {
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+          to {
+            transform: translate3d(14vw, -12vh, 0) scale(1.16);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background" aria-hidden="true">
+      <div class="base"></div>
+      <div class="color-field"></div>
+      <div class="orb orb-white"></div>
+      <div class="orb orb-lime"></div>
+      <div class="orb orb-mint"></div>
+      <div class="orb orb-blue"></div>
+      <div class="vignette"></div>
+      <div class="noise"></div>
+    </div>
+  </body>
+</html>
